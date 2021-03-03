@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Material Design for Bootstrap</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+    />
+    <!-- MDB -->
+    <link rel="stylesheet" href="css/mdb.min.css" />
+    <style>
+      
+    </style>
+  </head>
+  <body>
+    <!-- Start your project here-->
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col-12 text-center">
+          <h3>Camara</h3>
+        </div>
+        <div class="col-8 shadow p-5 text-center">
+            <video id="mostrar-video" autoplay></video>
+        </div>
+        <div class="col-12">
+          <div class="row justify-content-center text-center">
+            <div class="col-12 text-center p-5 justify-content-center">
+              <input type="button" class="btn btn-primary btn-lg btn-block" name="" id="tomar-image" value="Tomar Foto">
+            </div>
+            <div class="col-12 text-center justify-content-center shadow p-5" style="background-color: rgba(23,32,33, .5);">
+              <div id="video-canvas">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End your project here-->
+
+    <!-- MDB -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <!-- Custom scripts -->
+    <script type="text/javascript">
+      var video = document.getElementById("mostrar-video"),
+          tomar = document.getElementById('tomar-image'),
+          canvas = document.getElementById('video-canvas')
+          //Pregunta sobre el acceso a la camara
+          navigator.mediaDevices.getUserMedia({video:true})
+            .then(function (stream){
+              video.srcObject = stream;
+              video.play();
+
+
+
+              //Tons al dar click al boton se muestra la foto
+
+              tomar.addEventListener("click", function(){
+                var dibuja = document.createElement('canvas');
+                dibuja.width = video.videoWidth;
+                dibuja.height = video.videoHeight;
+
+                var context2d = dibuja.getContext("2d");
+                context2d.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+
+                //Poniendolo en el contenedor
+
+                canvas.innerHTML= "";
+                canvas.appendChild(dibuja);
+              })
+            })
+            .catch(function(err){
+              alert(err)
+            })
+    </script>
+  </body>
+</html>
